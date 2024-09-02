@@ -1,0 +1,27 @@
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  background-color: rgb(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  color: white;
+  overflow: hidden;
+}
+
+.modal_button {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  background-color: #ffffff00;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}

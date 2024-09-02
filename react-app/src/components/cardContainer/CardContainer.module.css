@@ -1,0 +1,7 @@
+.container {
+  margin: 1rem 0px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}

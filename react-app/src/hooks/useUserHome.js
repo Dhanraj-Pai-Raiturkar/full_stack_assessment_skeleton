@@ -11,6 +11,27 @@ const useUserHome = () => {
   const [homeUsers, setHomeUsers] = useState();
   const [selectedHomeDetails, setSelectedHomeDetails] = useState();
 
+  const fetchUserForHome = async (homeId) => {
+    try {
+      setLoadingSelectedHome(true);
+      const response = await fetch(
+        `http://localhost:5001/user/find-by-home?homeId=${homeId}`
+      );
+      const data = await response.json();
+      setHomeUsers(data?.response?.users ?? []);
+      setSelectedHomeDetails({
+        id: data?.response?.id,
+        title: data?.response?.street_address,
+      });
+      setLoadingSelectedHome(false);
+    } catch (error) {
+      console.error(" error", error);
+      setLoadingSelectedHome(false);
+    } finally {
+      setLoadingSelectedHome(false);
+    }
+  };
+
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
@@ -50,28 +71,27 @@ const useUserHome = () => {
   }, [selectedUser]);
 
   useEffect(() => {
-    const fetchUserForHome = async (homeId) => {
-      try {
-        setLoadingSelectedHome(true);
-        const response = await fetch(
-          `http://localhost:5001/user/find-by-home?homeId=${homeId}`
-        );
-        const data = await response.json();
-        setHomeUsers(data?.response?.users ?? []);
-        setSelectedHomeDetails({
-          id: data?.response?.id,
-          title: data?.response?.street_address,
-        });
-        setLoadingSelectedHome(false);
-      } catch (error) {
-        console.error(" error", error);
-        setLoadingSelectedHome(false);
-      } finally {
-        setLoadingSelectedHome(false);
-      }
-    };
     if (selectedHome) fetchUserForHome(selectedHome);
   }, [selectedHome]);
+
+  const updateHomeUsers = async (homeId, userIds) => {
+    try {
+      const response = await fetch(`http://localhost:5001/home/update-users`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          homeId,
+          userIds,
+        }),
+      });
+      const data = await response.json();
+      console.log("d data", data);
+    } catch (error) {
+      console.error("updateHomeUsers error", error);
+    }
+  };
 
   return {
     users,
@@ -84,6 +104,7 @@ const useUserHome = () => {
     loadingSelectedHome,
     homeUsers,
     selectedHomeDetails,
+    updateHomeUsers,
   };
 };
 

@@ -18,6 +18,7 @@ function App() {
     homeUsers,
     loadingSelectedHome,
     selectedHomeDetails,
+    updateHomeUsers,
   } = useUserHome();
   useEffect(() => {
     console.log("selectedHome", selectedHome);
@@ -26,13 +27,17 @@ function App() {
     <div className="App">
       {selectedHome && (
         <Modal>
-          <UserList
-            id={selectedHomeDetails?.id}
-            title={selectedHomeDetails?.title}
-            users={homeUsers}
-            loading={loadingSelectedHome}
-            setSelectedHome={setSelectedHome}
-          />
+          {homeUsers && !loadingSelectedHome && (
+            <UserList
+              id={selectedHomeDetails?.id}
+              title={selectedHomeDetails?.title}
+              selectedUsers={homeUsers}
+              loading={loadingSelectedHome}
+              setSelectedHome={setSelectedHome}
+              allUsers={users}
+              updateHomeUsers={updateHomeUsers}
+            />
+          )}
         </Modal>
       )}
       <DropDown items={users} setSelectedUser={setSelectedUser} />

@@ -34,6 +34,22 @@ services:
       - app_net_2
     restart: on-failure
 
+  react_app:
+    build:
+      context: ./react-app
+      dockerfile: Dockerfile.react
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./react-app:/app:rw
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+    networks:
+      - app_net_2
+
 networks:
   app_net_2:
 

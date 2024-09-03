@@ -37,10 +37,6 @@ const UserList = (props) => {
     setUpdateSuccess(false);
     setSelectedHome(null);
   };
-
-  useEffect(() => {
-    console.log("currentSelectedUsers", currentSelectedUsers);
-  }, [currentSelectedUsers]);
   return (
     <>
       <div className={Classes["container"]}>
@@ -58,7 +54,6 @@ const UserList = (props) => {
                     (user) => user.email
                   );
                   const checkedUser = selectedUsersEmail?.includes(user.email);
-                  console.log("checked", checkedUser, user.email);
                   return (
                     <div className={Classes["checkbox-row"]}>
                       <input

@@ -1,5 +1,4 @@
 import "./App.css";
-import { useEffect, useState } from "react";
 import DropDown from "./components/dropdown/DropDown";
 import useUserHome from "./hooks/useUserHome";
 import CardContainer from "./components/cardContainer/CardContainer";
@@ -20,9 +19,6 @@ function App() {
     selectedHomeDetails,
     updateHomeUsers,
   } = useUserHome();
-  useEffect(() => {
-    console.log("selectedHome", selectedHome);
-  }, [selectedHome]);
   return (
     <div className="App">
       {selectedHome && (

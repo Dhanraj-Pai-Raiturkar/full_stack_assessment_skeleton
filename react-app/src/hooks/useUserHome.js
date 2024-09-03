@@ -87,7 +87,6 @@ const useUserHome = () => {
         }),
       });
       const data = await response.json();
-      console.log("d data", data);
     } catch (error) {
       console.error("updateHomeUsers error", error);
     }

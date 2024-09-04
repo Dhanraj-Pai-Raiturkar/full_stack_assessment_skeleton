@@ -288,7 +288,22 @@ docker-compose -f docker-compose.final.yml up --build -d
 
 ### solution
 
-> explain briefly your solution for this problem here
+##### Tech Stack:
+  - create-react-app for boilerplate react web app.
+  - vanilla CSS for styling components (CSS modules)
+  - redux-toolkit for state management / store management.
+##### Folder Structure:
+  - src/components
+    - All the user defined component files will reside in this directory.
+    - Each Component will have its own directory within src/components dir, with Component file and the respective css module file.
+  - src/hooks
+    - This dir will include all custom hook files
+    - This was initially done to have a custom hook for handling user and home state, but this was eventually discarded as the solution required the use of redux toolkit for state management.
+  - src/slices
+    - This dir will include all the slice definition files for the redux store.
+  - src/store:
+    - This dir will contain all the store configurations for the app
+
 
 ## 3. Backend API development on Node
 
@@ -354,7 +369,30 @@ docker-compose -f docker-compose.final.yml up --build -d
 
 ### solution
 
-> explain briefly your solution for this problem here
+##### Tech Stack:
+  - nodejs express server.
+  - sequelize used as ORM to communicate with the MYSQL database.
+  - redux-toolkit for state management / store management.
+##### Folder Structure:
+  - ./postmanCollection:
+    - This dir is dedicated for having the updated postman collection for all the APIs
+  - src/controllers;
+    - This will be the start point for all the API calls, based on the API endpoint, rounter will decide as to which controller function to invoke.
+    - controllers will internally make a call to any of the services or repositories to serve the response.
+  - src/database:
+    - This dir will include the file(s) for making a db connection.
+  - src/models:
+    - All the database table models will be defined and stored in this directory.
+    - Models will be imported by repositories to query/update/create/delete the requested data.
+  - src/repository:
+    - This dir includes all the repository definitions for interating with models to fetch create update or delete data.
+    - Respository files will be responsible for importing models to perform the respective operations.
+  - src/routes:
+    - This dir will include all the API routes.
+    - The routes will be responsible for mapping rest endpoints to their respective controllers.
+    - Any middlewares required to intercept the API will be chained here before invoking the controller function.
+  - ./index:
+    - This file is responsible for making database connections or any pre configurations before spinning up the REST API server.
 
 ## Submission Guidelines
 

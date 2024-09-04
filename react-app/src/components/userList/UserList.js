@@ -1,21 +1,41 @@
 import { useEffect, useState } from "react";
 import Classes from "./UserList.module.css";
 import Toast from "../toast/Toast";
+import { useDispatch } from "react-redux";
+import { updatedSelectedHome } from "../../slices/homeSlice";
+import { showModal } from '../../slices/modalSlice'
 
 const UserList = (props) => {
   const {
     id,
     title,
     selectedUsers,
-    setSelectedHome,
     allUsers,
-    updateHomeUsers,
     loading,
   } = props;
+  const dispatch = useDispatch()
   const [currentSelectedUsers, setCurrentSelectedUsers] = useState(
     selectedUsers?.map((user) => user.email) ?? []
   );
   const [updateSuccess, setUpdateSuccess] = useState(false);
+
+  const updateHomeUsers = async (homeId, userIds) => {
+    try {
+      const response = await fetch(`http://localhost:5001/home/update-users`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          homeId,
+          userIds,
+        }),
+      });
+      const data = await response.json();
+    } catch (error) {
+      console.error("updateHomeUsers error", error);
+    }
+  };
 
   const handleCheckboxChange = (event, email) => {
     const isChecked = event?.target?.checked;
@@ -33,9 +53,11 @@ const UserList = (props) => {
     setUpdateSuccess(true);
   };
 
-  const handleModelClose = () => {
-    setUpdateSuccess(false);
-    setSelectedHome(null);
+  const handleModalClose = () => {
+    // setUpdateSuccess(false);
+    // setSelectedHome(null);
+    // dispatch(updatedSelectedHome({}));
+    dispatch(showModal(false))
   };
   return (
     <>
@@ -78,7 +100,7 @@ const UserList = (props) => {
             </div>
             <div className={Classes["footer"]}>
               <button
-                onClick={() => setSelectedHome(null)}
+                onClick={() => dispatch(showModal(false))}
                 className={Classes["button"]}
                 disabled={updateSuccess}
               >
@@ -97,7 +119,7 @@ const UserList = (props) => {
       </div>
 
       {updateSuccess && (
-        <Toast message={"Update Successful"} onClose={handleModelClose} />
+        <Toast message={"Update Successful"} onClose={handleModalClose} />
       )}
     </>
   );

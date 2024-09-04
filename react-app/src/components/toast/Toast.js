@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Classes from "./Toast.module.css";
 
-const Toast = ({ message, duration = 3000, onClose }) => {
+const Toast = ({ message, duration = 1000, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();

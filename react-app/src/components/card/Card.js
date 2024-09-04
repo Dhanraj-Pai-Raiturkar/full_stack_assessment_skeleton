@@ -1,18 +1,25 @@
 import { useEffect } from "react";
 import Classes from "./Card.module.css";
+import { useDispatch } from "react-redux";
+import { updatedSelectedHome } from "../../slices/homeSlice";
+import { showModal } from "../../slices/modalSlice";
 
 const Card = (props) => {
-  const { setSelectedCard } = props;
+  const dispatch = useDispatch()
   useEffect(() => {
     const handleKeyUp = (event) => {
       const key = event?.code;
-      if (key === "Escape") setSelectedCard(null);
+      if (key === "Escape") dispatch(showModal(false))
     };
     window.addEventListener("keyup", handleKeyUp);
     return () => {
       window.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
+  const clickHandler = () => {
+    dispatch(updatedSelectedHome({id: props?.card?.id, title: props?.card?.street_address}))
+    dispatch(showModal(true))
+  }
   return (
     <div className={Classes["card"]}>
       <h3>{props?.card?.street_address}</h3>
@@ -35,7 +42,7 @@ const Card = (props) => {
         <b>price:</b> ${props?.card?.list_price}
       </span>
       <button
-        onClick={() => setSelectedCard(props?.card?.id)}
+        onClick={clickHandler}
         className={Classes["button"]}
       >
         Edit Users

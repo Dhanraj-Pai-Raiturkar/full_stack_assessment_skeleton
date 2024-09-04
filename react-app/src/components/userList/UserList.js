@@ -80,7 +80,7 @@ const UserList = (props) => {
                     <div className={Classes["checkbox-row"]}>
                       <input
                         type="checkbox"
-                        id="checkbox1"
+                        id={user}
                         className={Classes["checkbox-input"]}
                         defaultChecked={checkedUser}
                         onChange={(event) =>
@@ -104,14 +104,14 @@ const UserList = (props) => {
                 className={Classes["button"]}
                 disabled={updateSuccess}
               >
-                cancel
+                Cancel
               </button>
               <button
                 disabled={updateSuccess}
                 onClick={submitHandler}
                 className={Classes["button"]}
               >
-                submit
+                Submit
               </button>
             </div>
           </>
